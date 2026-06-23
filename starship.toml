@@ -1,0 +1,70 @@
+# ~/.config/starship.toml
+# Cross-shell prompt. The key safety feature for fleet work: when you're SSH'd
+# into a remote device the hostname turns bold red, so you never run a
+# destructive command on the wrong box.
+
+format = """
+$username$hostname$directory$git_branch$git_status$rust$golang$c$cmd_duration
+$character"""
+
+add_newline = true
+command_timeout = 1000
+
+[character]
+success_symbol = "[❯](bold green)"
+error_symbol = "[❯](bold red)"
+vimcmd_symbol = "[❮](bold green)"
+
+# ── SSH safety: only show user@host when remote, and make it loud ────────────
+[hostname]
+ssh_only = true
+ssh_symbol = "🌐 "
+format = "[$ssh_symbol$hostname]($style) "
+style = "bold red"
+
+[username]
+show_always = false        # only render over SSH (pairs with hostname above)
+format = "[$user]($style)@"
+style_user = "bold yellow"
+style_root = "bold red"
+
+[directory]
+truncation_length = 4
+truncate_to_repo = true
+style = "bold cyan"
+read_only = " 🔒"
+
+[git_branch]
+symbol = " "
+style = "bold purple"
+
+[git_status]
+style = "bold yellow"
+conflicted = "="
+ahead = "⇡${count}"
+behind = "⇣${count}"
+diverged = "⇕⇡${ahead_count}⇣${behind_count}"
+untracked = "?${count}"
+modified = "!${count}"
+staged = "+${count}"
+stashed = "*${count}"
+
+# ── Language versions (only render in relevant projects) ─────────────────────
+[rust]
+symbol = "🦀 "
+style = "bold red"
+
+[golang]
+symbol = "🐹 "
+style = "bold cyan"
+
+[c]
+symbol = "C "
+style = "bold blue"
+# Useful for embedded: shows the compiler in use when a C project is detected.
+
+# ── Long-build feedback (cross-compiles, cargo builds) ───────────────────────
+[cmd_duration]
+min_time = 2000            # only show if a command took >2s
+format = "took [$duration]($style) "
+style = "bold yellow"

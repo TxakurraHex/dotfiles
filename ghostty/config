@@ -1,0 +1,76 @@
+# ~/.config/ghostty/config
+# Tuned for long SSH sessions, large log output, and TUI development.
+# Reload in-app with cmd+shift+, . Inspect every option with:
+#   ghostty +show-config --default --docs | less
+#   ghostty +list-themes      (preview built-in themes)
+
+# ── Font ───────────────────────────────────────────────────────────────────
+# Ghostty ships JetBrains Mono Nerd Font built in, so glyphs/Starship icons
+# work with zero font installation. Swap if you prefer something else.
+font-family = "JetBrainsMono Nerd Font"
+font-size = 13
+# Slightly looser line height is easier on the eyes during long log reviews.
+adjust-cell-height = 8%
+
+# ── Theme ──────────────────────────────────────────────────────────────────
+# Auto-switch with the OS. Run `ghostty +list-themes` to browse.
+theme = Atom One Dark
+background-opacity = 0.97
+# macOS-only translucency; comment out if you want a flat background.
+background-blur-radius = 20
+# Dim inactive splits so the focused device/pane is obvious in a tiled layout.
+unfocused-split-opacity = 0.80
+
+# ── Scrollback ───────────────────────────────────────────────────────────────
+# Default is 10MB. Bump it so a long `journalctl -f` or `tcpdump` dump stays
+# in buffer. This is a byte limit, not a line count.
+scrollback-limit = 104857600
+
+# ── Cursor ───────────────────────────────────────────────────────────────────
+cursor-style = block
+cursor-style-blink = false
+mouse-hide-while-typing = true
+
+# ── macOS / keyboard ─────────────────────────────────────────────────────────
+# Critical for tmux, Neovim, and emacs-style bindings: makes the left Option
+# key send a real Alt/Meta instead of composing accented characters.
+macos-option-as-alt = left
+macos-titlebar-style = tabs
+window-colorspace = "display-p3"
+
+# ── Window ───────────────────────────────────────────────────────────────────
+window-padding-x = 8
+window-padding-y = 4
+window-save-state = always
+# Don't nag on close — but protect against killing a running build/ssh.
+confirm-close-surface = true
+quit-after-last-window-closed = true
+
+# ── Clipboard ────────────────────────────────────────────────────────────────
+copy-on-select = clipboard
+clipboard-read = allow
+clipboard-write = allow
+# Secure entry auto-engages on password prompts (lock icon top-right).
+
+# ── Shell integration ────────────────────────────────────────────────────────
+# Powers working-directory inheritance for new splits/tabs (handy when you
+# split mid-task on a remote box), prompt marking, and cmd+f jump-to-prompt.
+shell-integration = zsh
+shell-integration-features = cursor,sudo,title
+
+# ── Keybinds (additive — Ghostty already has sane macOS defaults) ────────────
+# Splits: mirror tmux muscle memory with cmd.
+keybind = cmd+d=new_split:right
+keybind = cmd+shift+d=new_split:down
+keybind = cmd+w=close_surface
+# Move focus between splits.
+keybind = cmd+left=goto_split:left
+keybind = cmd+right=goto_split:right
+keybind = cmd+up=goto_split:top
+keybind = cmd+down=goto_split:bottom
+# Equalize split sizes.
+keybind = cmd+shift+enter=equalize_splits
+# Quick (drop-down) terminal from anywhere — good for a fast `ssh device` check.
+keybind = global:cmd+grave_accent=toggle_quick_terminal
+# Reload config without restart.
+keybind = cmd+shift+comma=reload_config
