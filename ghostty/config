@@ -7,8 +7,8 @@
 # ── Font ───────────────────────────────────────────────────────────────────
 # Ghostty ships JetBrains Mono Nerd Font built in, so glyphs/Starship icons
 # work with zero font installation. Swap if you prefer something else.
-font-family = "JetBrainsMono Nerd Font"
-font-size = 13
+font-family = "MesloLGS NF"
+font-size = 12
 # Slightly looser line height is easier on the eyes during long log reviews.
 adjust-cell-height = 8%
 
